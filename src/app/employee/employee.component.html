@@ -1,3 +1,91 @@
-<p>
-  employee works!
-</p>
+<!DOCTYPE html>
+<div class="container">
+    <form [formGroup]="employeeForm" (ngSubmit)="onFormSubmit(employeeForm.value)">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="fname">First Name</label>
+                <input type="text" class="form-control" formControlName="FirstName" id="fname" placeholder="First Name">
+                <div>
+                    <span *ngIf="!employeeForm.get('FirstName').valid && employeeForm.get('FirstName').touched">Please Enter Name</span>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="lname">Last Name</label>
+                <input type="text" class="form-control" formControlName="LastName" id="lname" placeholder="Last Name">
+                <div>
+                    <span *ngIf="!employeeForm.get('LastName').valid && employeeForm.get('LastName').touched">Please Enter Last Name</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputEmail">Email ID</label>
+                <input type="email" class="form-control" formControlName="EmailId" id="inputEmail" placeholder="Email ID">
+                <div>
+                    <span *ngIf="!employeeForm.get('EmailId').valid && employeeForm.get('EmailId').touched">Please Enter Email ID</span>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputDesignation">Designation</label>
+                <input type="text" class="form-control" formControlName="Designation" id="inputDesignation" placeholder="Designation">
+                <div>
+                    <span *ngIf="!employeeForm.get('Designation').valid && employeeForm.get('Designation').touched">Please Enter Your Designation</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <div>
+                    <label for="">Gender</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="inlineRadio1" formControlName="Gender" value="0">
+                    <label class="form-check-label" for="inlineRadio1">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="inlineRadio2" formControlName="Gender" value="1">
+                    <label class="form-check-label" for="inlineRadio2">Female</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputAddress">Address</label>
+                <input type="email" class="form-control" formControlName="Address" id="inputAddress" placeholder="Address">
+                <div>
+                    <span *ngIf="!employeeForm.get('Address').valid && employeeForm.get('Address').touched">Please Enter Your Address</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-primary" [disabled]="!employeeForm.valid">Submit</button>
+            <button type="submit" class="btn btn-primary" style="margin-left:16px;" (click)="resetForm()">Reset</button>
+        </div>
+    </form>
+</div><br><br>
+<div class="container">
+    <div class="col-md-6">
+        <table id="customers" border="1">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Designation</th>
+                <th>Gender</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr *ngFor="let employee of allEmployees | async">
+                <td>{{employee.FirstName}}</td>
+                <td>{{employee.LastName}}</td>
+                <td>{{employee.EmailId}}</td>
+                <td>{{employee.Designation}}</td>
+                <td>{{employee.Gender == '0' ? 'Male' : 'Female'}}</td>
+                <td>
+                    <button type="button" (click)="loadEmployeeToEdit(employee.ID)">Edit</button>
+                </td>
+                <td>
+                    <button type="button" (click)="deleteEmployee(employee.ID)">Delete</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
